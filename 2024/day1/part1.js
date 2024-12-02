@@ -1,5 +1,6 @@
 const fs = require("fs");
 const input = fs.readFileSync("input.txt", "utf8");
+const lines = input.split("\n");
 
 /**
  * @param {string} line
@@ -33,7 +34,6 @@ function getPairs(leftList, rightList) {
   });
 }
 
-const lines = input.split("\n");
 const splitLines = lines.map(splitLine);
 const leftList = splitLines.map((line) => parseInt(line.left));
 const rightList = splitLines.map((line) => parseInt(line.right));
