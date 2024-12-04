@@ -1,6 +1,7 @@
 const fs = require("fs");
 const input = fs.readFileSync("input.txt", "utf8");
 const lines = input.split("\n");
+const cleanedLines = lines.map(line => line.replace("\r", ""));
 
 const countXMAS = (line) => {
   let count = 0;
@@ -14,17 +15,17 @@ const countXMAS = (line) => {
 
 const reverseLine = (line) => line.split("").reverse().join("");
 
-const lineForwardCount = lines.reduce((acc, line) => acc + countXMAS(line), 0);
-const lineBackwardsCount = lines.reduce((acc, line) => acc + countXMAS(reverseLine(line)), 0);
+const lineForwardCount = cleanedLines.reduce((acc, line) => acc + countXMAS(line), 0);
+const lineBackwardsCount = cleanedLines.reduce((acc, line) => acc + countXMAS(reverseLine(line)), 0);
 const lineCount = lineForwardCount + lineBackwardsCount;
 
 const columns = [];
-for (let i = 0; i < lines.length; i++) {
-  for (let j = 0; j < lines[i].length; j++) {
+for (let i = 0; i < cleanedLines.length; i++) {
+  for (let j = 0; j < cleanedLines[i].length; j++) {
     if (!columns[j]) {
       columns[j] = "";
     }
-    columns[j] += lines[i][j];
+    columns[j] += cleanedLines[i][j];
   }
 }
 
@@ -33,28 +34,26 @@ const colBackwardsCount = columns.reduce((acc, col) => acc + countXMAS(reverseLi
 const colCount = colForwardCount + colBackwardsCount;
 
 const diagLtoR = [];
-for (let i = 0; i < lines.length; i++) {
-  for (let j = 0; j < lines[i].length; j++) {
+for (let i = 0; i < cleanedLines.length; i++) {
+  for (let j = 0; j < cleanedLines[i].length; j++) {
     if (!diagLtoR[i + j]) {
       diagLtoR[i + j] = "";
     }
-    diagLtoR[i + j] += lines[i][j];
+    diagLtoR[i + j] += cleanedLines[i][j];
   }
 }
-
-console.log(diagLtoR);
 
 const diagLtoRForwardCount = diagLtoR.reduce((acc, diag) => acc + countXMAS(diag), 0);
 const diagLtoRBackwardsCount = diagLtoR.reduce((acc, diag) => acc + countXMAS(reverseLine(diag)), 0);
 const diagLtoRCount = diagLtoRForwardCount + diagLtoRBackwardsCount;
 
 const diagRtoL = [];
-for (let i = 0; i < lines.length; i++) {
-  for (let j = 0; j < lines[i].length; j++) {
+for (let i = 0; i < cleanedLines.length; i++) {
+  for (let j = 0; j < cleanedLines[i].length; j++) {
     if (!diagRtoL[i - j]) {
       diagRtoL[i - j] = "";
     }
-    diagRtoL[i - j] += lines[i][j];
+    diagRtoL[i - j] += cleanedLines[i][j];
   }
 }
 
